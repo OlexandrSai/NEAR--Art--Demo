@@ -45,10 +45,6 @@
                             <button class="py-4 w-full rounded-md text-white font-medium shadow-2xl hover:shadow-none bg-blue-500 hover:bg-blue-400">
                                 Login
                             </button>
-                            <p class="text-gray-400 mt-3 text-center">
-                                or
-                                <a href="#" class="text-blue-500 font-bold hover:text-blue-400 hover:underline">Sign up</a>
-                            </p>
                         </div>
                         <div class=" text-gray-500 mt-20 w-2/3 lg:w-full mb-10 mx-auto lg:mx-0" style="max-width: 600px;">
                             <p class="">
