@@ -49,20 +49,7 @@
                         </a>
                     </li>
                 </ul>
-                <div  v-if="!this.$props.isSignedIn">
-                <p class="font-medium text-gray-400 mt-8">General</p>
-                <ul class="text-gray-400 font-medium ml-6">
-                        <li class="mt-4">
-                        <button @click="$emit('signIn')"  class="hover:text-gray-900 flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                            </svg>
-                            Login
-                        </button>
-                    </li>
-                </ul>
-                </div>
-                <div v-else>
+                <div v-if="accountId">
                     <p class="font-medium text-gray-400 mt-8">General</p>
                 <ul class="text-gray-400 font-medium ml-6">
                         <li class="mt-4">
@@ -71,6 +58,19 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
                             Logout
+                        </button>
+                    </li>
+                </ul>
+                </div>
+                <div  v-else>
+<p class="font-medium text-gray-400 mt-8">General</p>
+                <ul class="text-gray-400 font-medium ml-6">
+                        <li class="mt-4">
+                        <button @click="$emit('signIn')"  class="hover:text-gray-900 flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            Login
                         </button>
                     </li>
                 </ul>
@@ -92,27 +92,18 @@
 <script>
 export default {
     props: {
-        isSignedIn: {
-            typeof:Boolean,
+        accountId: {
+            typeof:String,
             required:true
         },
-        accountName: {
-            typeof:String,
-            required:false
+        signIn: {
+            typeof:Function,
+            required:true
         },
-        balance: {
-            typeof:Number,
-            required: false
-        }
-    },
-    computed: {
-        getBalance () {
-            return (this.balance/1000000000000000000000000).toFixed(5)
+        signOut: {
+            typeof:Function,
+            required:true
         }
     }
 }
 </script>
-
-<style>
-
-</style>

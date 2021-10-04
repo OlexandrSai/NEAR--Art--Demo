@@ -4,7 +4,7 @@
                 <div class="w-full flex justify-between">
                     <div class="">
                         <h2 class="text-2xl font-bold">Login for see more</h2>
-                        <p class="text-gray-400 font-medium">here will be your art</p>
+                        <p class="text-gray-400 font-medium">here can be your art</p>
                     </div>
                     <div class="">
                         <svg class="" width="43" height="41" viewBox="0 0 43 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div class="mt-20 mx-auto lg:mx-0" style="max-width: 300px;">
-                            <button class="py-4 w-full rounded-md text-white font-medium shadow-2xl hover:shadow-none bg-blue-500 hover:bg-blue-400">
+                            <button @click="signIn" class="py-4 w-full rounded-md text-white font-medium shadow-2xl hover:shadow-none bg-blue-500 hover:bg-blue-400">
                                 Login
                             </button>
                         </div>
@@ -67,10 +67,11 @@
 
 <script>
 export default {
-
+    props: {
+        signIn: {
+            typeof:Function,
+            required:true
+        }
+    }
 }
 </script>
-
-<style>
-
-</style>

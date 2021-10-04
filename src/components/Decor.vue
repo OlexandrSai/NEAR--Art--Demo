@@ -1,5 +1,5 @@
 <template>
-  <section v-if="this.$props.isSignedIn">
+  <section v-if="accountId">
         <div style="z-index: -1;" class="absolute hidden md:block top-80 left-64">
             <img src="../assets/decor-blue.png" alt="">
         </div>
@@ -15,14 +15,10 @@
 <script>
 export default {
     props: {
-        isSignedIn: {
-            typeof:Boolean,
+        accountId: {
+            typeof:String,
             required:true
         }
     }
 }
 </script>
-
-<style>
-
-</style>
