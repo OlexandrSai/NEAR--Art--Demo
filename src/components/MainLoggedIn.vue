@@ -1,6 +1,7 @@
 <template>
   <main class="w-full pt-10 px-8">
             <nav class="block md:flex justify-between">
+                <button @click="generateDesign" class="bg-blue-200">Generate new art</button>
                 <!-- Claim by seed-->
                 <div class="relative">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-4 left-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -123,7 +124,11 @@ export default {
     props: {
         accountId: {
             typeof:String,
-            required:false
+            required:true
+        },
+        generateDesign: {
+            typeof:Function,
+            required:true
         }
     }
 }

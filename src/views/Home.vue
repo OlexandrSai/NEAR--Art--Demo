@@ -2,7 +2,7 @@
   <header class="block md:flex w-full">
     <Decor  :accountId="accountId" :signIn="signIn" :signOut="signOut"/>
     <SideBar :accountId="accountId"  v-on:signIn='signIn' v-on:signOut='signOut'/>
-    <MainLoggedIn v-if="accountId"  :accountId="accountId" />
+    <MainLoggedIn v-if="accountId"  :accountId="accountId" :generateDesign="generateDesign"/>
     <Main v-else :signIn="signIn"/>
   </header>
 </template>
@@ -13,6 +13,8 @@ import Main from '@/components/Main.vue'
 import Decor from '@/components/Decor.vue'
 import MainLoggedIn from '@/components/MainLoggedIn.vue'
 import { wallet, CONTRACT_ID } from "@/services/near";
+import { useArtDemo } from "@/composables/near"
+
 export default {
     components: {
     SideBar,
@@ -22,18 +24,16 @@ export default {
   },
   setup() {
     const accountId  = wallet.getAccountId();
+    const {generateDesign} = useArtDemo();
     return {
       accountId,
-            signIn: () => wallet.requestSignIn(CONTRACT_ID),
-            signOut: () => {
-                wallet.signOut();
-                window.location.reload();
-            }
+      signIn: () => wallet.requestSignIn(CONTRACT_ID),
+      signOut: () => {
+        wallet.signOut();
+        window.location.reload();
+        },
+      generateDesign
     }
   }
 }
 </script>
-
-<style>
-
-</style>
