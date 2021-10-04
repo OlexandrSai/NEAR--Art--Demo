@@ -12,3 +12,37 @@ export const near = new Near({
   });
 
 export const wallet = new WalletConnection(near, "artdemo");
+
+
+export const viewMyDesign = () => {
+  return wallet.account().viewFunction(CONTRACT_ID, "viewMyDesign")
+}
+
+export const viewMyDesign = () => {
+  return wallet.account().viewFunction(CONTRACT_ID, "burnMyDesign")
+}
+
+export const viewDesigns = () => {
+  return wallet.account().viewFunction(CONTRACT_ID, "viewDesigns")
+}
+
+export const claimMyDesign = ({seed}) => {
+  console.log(id)
+  return wallet.account().functionCall({
+      contractId: CONTRACT_ID,
+      methodName: "claimMyDesign",
+      gas,
+      args: {seed}
+  })
+}
+
+export const design = ({seed}) => {
+  console.log(id)
+  return wallet.account().functionCall({
+      contractId: CONTRACT_ID,
+      methodName: "claimMyDesign",
+      gas,
+      args: {seed}
+  })
+}
+
