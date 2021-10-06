@@ -1,8 +1,8 @@
 <template>
   <header class="block md:flex w-full">
     <Decor  :accountId="accountId" :signIn="signIn" :signOut="signOut"/>
-    <SideBar :accountId="accountId"  v-on:signIn='signIn' v-on:signOut='signOut'/>
-    <MainLoggedIn v-if="accountId"  :accountId="accountId" :generateDesign="generateDesign"/>
+    <SideBar :accountId="accountId"  :signIn='signIn' :signOut='signOut'/>
+    <MainLoggedIn v-if="accountId"  :accountId="accountId" :generateDesign="generateDesign" :claimDesign="claimDesign"/>
     <Main v-else :signIn="signIn"/>
   </header>
 </template>
@@ -24,7 +24,7 @@ export default {
   },
   setup() {
     const accountId  = wallet.getAccountId();
-    const {generateDesign} = useArtDemo();
+    const {generateDesign, claimDesign} = useArtDemo();
     return {
       accountId,
       signIn: () => wallet.requestSignIn(CONTRACT_ID),
@@ -32,7 +32,8 @@ export default {
         wallet.signOut();
         window.location.reload();
         },
-      generateDesign
+      generateDesign,
+      claimDesign
     }
   }
 }

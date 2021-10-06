@@ -23,3 +23,14 @@ export const near = new Near({
       gas
   })
   };
+
+  //function to claim existing design
+  export const claimDesign = (seed) => {
+    return wallet.account().functionCall({
+      contractId: CONTRACT_ID,
+      methodName: "claimMyDesign",
+      gas,
+      args:{seed:seed}
+  })
+  };
+

@@ -7,7 +7,15 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-4 left-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                       </svg>
-                    <input  type="text" placeholder="Enter seed to claim" class="bg-gray-100 border border-gray-400 rounded-full outline-none pl-14" style="min-height: 60px; min-width: 300px;">
+                      <form>
+                            <input  class="bg-gray-100 border border-gray-400 rounded-full outline-none pl-14" style="min-height: 60px; min-width: 300px;"
+                                    v-model="seed"
+                                    type="seed"
+                                    name="seed"
+                                    id="seed"
+                                    placeholder="Enter seed to claim">
+                             <button @click="handleSubmit" class="ml-2 h-6 w-6 top-4 left-4 text-gray-400">Claim</button>
+                      </form>
                 </div>
                 <div class="flex">
                     <!-- Account name -->
@@ -17,7 +25,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <p class="text-md font-bold ml-4 mt-2 block md:hidden lg:block">{{accountId}} <br> <span class="text-sm font-medium text-gray-400">1 art in the property</span></p>
+                        <p class="text-md font-bold ml-4 mt-2 block md:hidden lg:block">{{accountId}}</p>
                     </a>
                 </div>
             </nav>
@@ -76,7 +84,7 @@
                                 <!-- Option -->
                                 <p class="text-gray-200">Owner</p>
                                 <!-- Value -->
-                                <p class="text-white ml-6">{{accountName}}</p>
+                                <p class="text-white ml-6">{{accountId}}</p>
                             </div>
                             <!-- One row -->
                             <!-- One row -->
@@ -120,6 +128,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 export default {
     props: {
         accountId: {
@@ -129,11 +138,25 @@ export default {
         generateDesign: {
             typeof:Function,
             required:true
+        },
+        claimDesign: {
+            typeof:Function,
+            required:true
+        }
+    },
+    setup(props) {
+        const seed = ref("")
+
+        const handleSubmit = () => {
+            props.claimDesign({
+                seed: seed.value
+            })
+        }
+
+        return {
+            seed,
+            handleSubmit
         }
     }
 }
 </script>
-
-<style>
-
-</style>
