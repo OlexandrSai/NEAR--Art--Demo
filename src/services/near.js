@@ -34,3 +34,12 @@ export const near = new Near({
   })
   };
 
+  //function to burn design
+  export const burnDesign = () => {
+    return wallet.account().functionCall({
+      contractId: CONTRACT_ID,
+      methodName: "burnMyDesign",
+      gas
+  })
+  };
+

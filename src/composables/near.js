@@ -1,7 +1,8 @@
 import { ref, onMounted } from "vue";
 import {
     generateDesign,
-    claimDesign
+    claimDesign,
+    burnDesign
   } from "@/services/near";
 
 export const useArtDemo= () => {
@@ -26,8 +27,13 @@ export const useArtDemo= () => {
         claimDesign(seed)
     }
 
+    const handleBurnDesign = async () => {
+        burnDesign()
+    }
+
     return {
         generateDesign:  handleGenerateDesign,
-        claimDesign: handleClaimDesign
+        claimDesign: handleClaimDesign,
+        burnDesign: handleBurnDesign
     }
 }

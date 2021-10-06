@@ -103,22 +103,22 @@
                                 <p class="text-white ml-6">Value #2</p>
                             </div>
                             <!-- One row -->
-                            <p class ="text-white mt-3" style="max-width: 500px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae voluptate, 
+                            <!-- <p class ="text-white mt-3" style="max-width: 500px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae voluptate, 
                                 debitis illo culpa placeat id architecto iste quasi cupiditate eveniet cumque,
                                  at natus ut pariatur, nemo et nihil consectetur laborum!
-                            </p>
+                            </p> -->
                         </div>  
                         <!-- Art method-->
                         <div class="ml-auto">
                             <div class="flex text-white text-lg">
                                 <p class="font-medium mt-1 mr-3 hidden lg:block">Burn</p>
-                                <a href="#" class="flex font-medium block border-2 border-white rounded-md mx-auto w-full m-0 py-2 lg:p-2 hover:bg-white hover:text-red-400">
+                                <button @click="burnDesign" class="flex font-medium block border-2 border-white rounded-md mx-auto w-full m-0 py-2 lg:p-2 hover:bg-white hover:text-red-400">
                                     <p class="block lg:hidden mx-auto">Burn</p>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 mr-4 lg:mr-0 lg:ml-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
                                     </svg>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -142,6 +142,10 @@ export default {
         claimDesign: {
             typeof:Function,
             required:true
+        },
+        burnDesign: {
+            typeof: Function,
+            required: true
         }
     },
     setup(props) {
