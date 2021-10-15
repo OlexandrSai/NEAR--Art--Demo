@@ -1,4 +1,4 @@
-# near--art--demo
+# near--art--demo--frontend
 
 ## Project setup
 ```

@@ -42,4 +42,3 @@ export const near = new Near({
       gas
   })
   };
-
