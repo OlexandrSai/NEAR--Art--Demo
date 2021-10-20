@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "near-api-js": "^0.43.1",
     "vue": "^3.0.0",
+    "vue-loading-overlay": "^4.0.4",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },

@@ -51,7 +51,7 @@
                             <!-- Offer buttons -->
                             <div class="flex flex-col lg:flex-row items-center mt-8 lg:mt-6 2xl:mt-11">
                                 <!-- Login btn -->
-                                <a href="#" class="">
+                                <button @click="signIn" class="">
                                     <div class="bg-gray-300 offer-btn rounded-full">
                                         <div class="flex h-full items-center justify-center ">
                                             <p class="font-bold text-sm 2xl:text-2xl">
@@ -62,7 +62,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                </a>
+                                </button>
                                 <!-- Second text -->
                                 <div class="relative p-12 mt-8 lg:mt-0 lg:ml-8 ">
                                     <img src="@/assets/img/mark.png" alt="" class="absolute -top-4 left-3 lg:hidden xl:block">
@@ -163,22 +163,11 @@
 <script>
 
 import { wallet, CONTRACT_ID } from "@/services/near";
-import { useArtDemo } from "@/composables/near"
 
 export default {
   setup() {
-    const accountId  = wallet.getAccountId();
-    const {generateDesign, claimDesign, burnDesign} = useArtDemo();
     return {
-      accountId,
-      signIn: () => wallet.requestSignIn(CONTRACT_ID),
-      signOut: () => {
-        wallet.signOut();
-        window.location.reload();
-        },
-      generateDesign,
-      claimDesign,
-      burnDesign
+      signIn: () => wallet.requestSignIn(CONTRACT_ID)
     }
   }
 }

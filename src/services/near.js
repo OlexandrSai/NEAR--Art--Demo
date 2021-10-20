@@ -2,7 +2,7 @@ import { keyStores, Near, WalletConnection } from "near-api-js";
 //import { keyStores, Near, WalletConnection, utils } from "near-api-js";
 import BN from "bn.js";
 
-export const CONTRACT_ID = "alxndrsai.testnet";
+export const CONTRACT_ID = "dev-1634664366946-41923290301881";
 const gas = new BN("100000000000000");
 
 // use new NEAR to avoid async/await
@@ -15,12 +15,21 @@ export const near = new Near({
 
   export const wallet = new WalletConnection(near, "artdemo");
 
+  export const getTempDesign = (accountId) => {
+    return  wallet.account().viewFunction(CONTRACT_ID,"getTempDesign", {accountId:accountId})
+  }
+
+  export const getViewMyDesign = (accountId) => {
+    return  wallet.account().viewFunction(CONTRACT_ID,"viewMyDesign", {accountId:accountId})
+  }
+
   //function to generate new design
-  export const generateDesign = () => {
+  export const generateDesign = (accountId) => {
     return wallet.account().functionCall({
       contractId: CONTRACT_ID,
       methodName: "design",
-      gas
+      gas,
+      args: {accountId: accountId}
   })
   };
 
