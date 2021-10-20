@@ -11,7 +11,7 @@ import {
   const accountId = wallet.getAccountId();
 
 export const useArtDemo= () => {
-    const generatedDesign  = ref(0,0)
+    const generatedDesign  = ref(false)
     const myDesign = ref(false)
     const isLoading = ref(false)
     const  err = ref(null)
