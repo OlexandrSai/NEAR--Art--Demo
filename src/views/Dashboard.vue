@@ -64,10 +64,10 @@
                             </div>
                         </div>
 
-                        <form action="" class="mt-7 lg:mt-0 flex flex-col md:flex-row items-center justify-between w-full">
+                        <form  action="" class="mt-7 lg:mt-0 flex flex-col md:flex-row items-center justify-between w-full">
                             
                             <!-- Search -->
-                            <div class="w-full flex items-center">
+                            <div v-if="generatedDesign" class="w-full flex items-center">
                                 <input type="text" class="placeholder-current text-gray-500 focus:text-black dashboard-search outline-none pl-16 py-4 font-bold"
                                  v-model="generatedDesign.seed">
                                 <button @click="claimDesign(generatedDesign.seed)" href="#" class="ml-6 text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-600 transform active:scale-95">Claim</button>
@@ -84,7 +84,7 @@
                         </form>
                     </nav>
 
-                    <div class="relative mt-8 ownart-bg h-auto px-5 md:px-20 lg:px-16 xl:px-8 2xl:px-10 pt-9 pb-12">    
+                    <div  v-if="generatedDesign!=null" class="relative mt-8 ownart-bg h-auto px-5 md:px-20 lg:px-16 xl:px-8 2xl:px-10 pt-9 pb-12">    
                      <div class="relative flex flex-col md:flex-row items-start md:items-end mt-9">
 
                         <img src="@/assets/img/romb.png" alt="" class="hidden md:block lg:hidden absolute w-16 top-0 right-24">

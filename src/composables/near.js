@@ -11,7 +11,7 @@ import {
   const accountId = wallet.getAccountId();
 
 export const useArtDemo= () => {
-    const generatedDesign  = ref(false)
+    const generatedDesign  = ref(0,0)
     const myDesign = ref(false)
     const isLoading = ref(false)
     const  err = ref(null)
@@ -24,7 +24,7 @@ export const useArtDemo= () => {
             isLoading.value=false
         } catch (e) {
             err.value = e
-            console.log('error')
+            console.log(err)
         }
     })
 
