@@ -20,6 +20,9 @@ export const useArtDemo= () => {
         try {
             isLoading.value=true
             generatedDesign.value = await getTempDesign(accountId)
+            if (generatedDesign.value === null) {
+                await handleGenerateDesign(accountId)
+            }
             myDesign.value = await getViewMyDesign(accountId)
             isLoading.value=false
         } catch (e) {
