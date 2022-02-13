@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ArtService} from "../../services/art.service";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(public artService: ArtService) { }
 
   ngOnInit(): void {
   }
 
+  async signIn() {
+    await this.artService.nearService.handleSignIn();
+  }
 }
