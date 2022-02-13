@@ -38,6 +38,8 @@ export class NearService {
   };
 
   getTempDesign(accountId: any) {
+    console.log(accountId)
+    console.log(this.CONTRACT_ID);
     return this.wallet.account().viewFunction(this.CONTRACT_ID, "getTempDesign", {accountId: accountId})
   }
 

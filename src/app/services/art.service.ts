@@ -5,8 +5,8 @@ import {NearService} from "./near.service";
   providedIn: 'root'
 })
 export class ArtService {
-  public generatedDesign  = false;
-  public myDesign = false;
+  public generatedDesign: any  = false;
+  public myDesign: any = false;
   public isLoading = false;
   public err = null;
 
@@ -31,5 +31,19 @@ export class ArtService {
     await this.nearService.burnDesign()
     this.myDesign = false
     this.isLoading = false
+  }
+
+  async loadArt() {
+    try {
+      this.isLoading=true
+      this.generatedDesign = await this.nearService.getTempDesign(this.nearService.accountId)
+      if (this.generatedDesign === null) {
+        await this.handleGenerateDesign(this.nearService.accountId)
+      }
+      this.myDesign = await this.nearService.getViewMyDesign(this.nearService.accountId)
+      this.isLoading = false
+    } catch (e: any) {
+      this.err = e
+    }
   }
 }
