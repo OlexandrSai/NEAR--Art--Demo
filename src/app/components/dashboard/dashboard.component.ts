@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ArtService} from "../../services/art.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -8,14 +9,17 @@ import {ArtService} from "../../services/art.service";
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(public artService: ArtService) { }
+  constructor(public artService: ArtService, private router: Router,) { }
 
   ngOnInit(): void {
     this.loadArt();
   }
 
-  signOut() {
-    this.artService.nearService.handleSignOut();
+  async signOut() {
+    console.log("Sign Out")
+    await this.artService.nearService.handleSignOut();
+    localStorage.removeItem(`near-api-js:keystore:${this.artService.nearService.accountId}:testnet`);
+    await this.router.navigate(['/']);
   }
 
   async loadArt() {

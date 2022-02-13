@@ -34,6 +34,7 @@ export class NearService {
 
   handleSignOut = () => {
     this.wallet.signOut()
+    console.log('after')
     this.accountId = ''
   };
 
