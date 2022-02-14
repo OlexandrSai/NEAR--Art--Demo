@@ -12,19 +12,13 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    let loggedIn = this.artService.nearService.wallet.getAccountId() !== '';
 
-
-    if (this.artService.nearService.wallet.getAccountId() !== '') {
-      console.log('da')
-      this.router.navigate(['dashboard']);
-      return true
-    } else {
-      console.log('net')
+    if (!loggedIn) {
       this.router.navigate(['']);
-
     }
 
-    return false;
+    return loggedIn;
   }
 
 }
