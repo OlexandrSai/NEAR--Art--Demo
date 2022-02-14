@@ -34,13 +34,10 @@ export class NearService {
 
   handleSignOut = () => {
     this.wallet.signOut()
-    console.log('after')
     this.accountId = ''
   };
 
   getTempDesign(accountId: any) {
-    console.log(accountId)
-    console.log(this.CONTRACT_ID);
     return this.wallet.account().viewFunction(this.CONTRACT_ID, "getTempDesign", {accountId: accountId})
   }
 

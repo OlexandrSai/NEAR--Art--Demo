@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ArtService} from "../../services/art.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,12 @@ import {ArtService} from "../../services/art.service";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public artService: ArtService) { }
+  constructor(public artService: ArtService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.artService.nearService.accountId !== '') {
+      this.router.navigate(['dashboard'])
+    }
   }
 
   async signIn() {

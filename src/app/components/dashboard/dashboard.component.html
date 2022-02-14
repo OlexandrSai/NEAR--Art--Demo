@@ -1,3 +1,4 @@
+<app-loader *ngIf="artService.isLoading"></app-loader>
 <div class="bg-gray-300">
   <div class="container mx-auto px-6 pt-12 lg:pt-20">
 
@@ -278,6 +279,3 @@
     </footer>
   </div>
 </div>
-<!--<loading v-model:active="isLoading"-->
-<!--         :can-cancel="false"-->
-<!--         :is-full-page="true"/>-->

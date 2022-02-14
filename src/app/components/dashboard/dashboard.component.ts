@@ -16,7 +16,6 @@ export class DashboardComponent implements OnInit {
   }
 
   async signOut() {
-    console.log("Sign Out")
     await this.artService.nearService.handleSignOut();
     localStorage.removeItem(`near-api-js:keystore:${this.artService.nearService.accountId}:testnet`);
     await this.router.navigate(['/']);
