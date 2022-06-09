@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import {NearService} from "./near.service";
+import { NearService } from "./near.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtService {
-  public generatedDesign: any  = false;
+  public generatedDesign: any = false;
   public myDesign: any = false;
   public isLoading = false;
   public err = null;
 
-  constructor(public nearService: NearService) { }
+  constructor(public nearService: NearService) {
+  }
 
   async handleGenerateDesign(accountId: any) {
     this.isLoading = true
@@ -21,8 +22,9 @@ export class ArtService {
 
   async handleClaimDesign(seed: any) {
     this.isLoading = true
-    await this.nearService.claimDesign(seed).then(res=>console.log(res), res=>console.log(res))
+    await this.nearService.claimDesign(seed);
     this.myDesign = await this.nearService.getViewMyDesign(this.nearService.accountId)
+    console.log(this.myDesign)
     this.isLoading = false
   }
 
@@ -35,7 +37,7 @@ export class ArtService {
 
   async loadArt() {
     try {
-      this.isLoading=true
+      this.isLoading = true
       this.generatedDesign = await this.nearService.getTempDesign(this.nearService.accountId)
       if (this.generatedDesign === null) {
         await this.handleGenerateDesign(this.nearService.accountId)

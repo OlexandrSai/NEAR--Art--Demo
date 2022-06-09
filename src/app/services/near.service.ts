@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {keyStores, Near, WalletConnection} from "near-api-js";
-import {environment} from "../../environments/environment";
+import { Injectable } from '@angular/core';
+import { Contract, keyStores, Near, WalletConnection } from "near-api-js";
+import { environment } from "../../environments/environment";
 
 // @ts-ignore
 import BN from "bn.js";
@@ -9,69 +9,85 @@ import BN from "bn.js";
   providedIn: 'root'
 })
 export class NearService {
+  public near: Near;
+  public wallet: WalletConnection;
   public accountId = '';
   public CONTRACT_ID = environment.CONTRACT_ID;
-  public gas = new BN(environment.GAS);
-  public near = new Near({
-    networkId: environment.NETWORK_ID,
-    keyStore: new keyStores.BrowserLocalStorageKeyStore(),
-    nodeUrl: environment.NODE_URL,
-    walletUrl: environment.WALLET_URL,
-    headers: {}
-  });
-  public wallet = new WalletConnection(this.near, "artdemo");
+  public artContract: any;
 
   constructor() {
+    // connecting to NEAR
+    this.near = new Near({
+      networkId: environment.NETWORK_ID,
+      keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+      nodeUrl: environment.NODE_URL,
+      walletUrl: environment.WALLET_URL,
+      headers: {}
+    });
+
+    // create wallet connection
+    this.wallet = new WalletConnection(this.near, "artdemo");
+    // get contract
+    this.artContract = this.getArtContract();
     this.accountId = this.wallet.getAccountId();
   }
 
-  handleSignIn = async () => {
-    await this.wallet.requestSignIn({
-      contractId: environment.CONTRACT_ID,
-      methodNames: [] // add methods names to restrict access
-    })
-  };
-
-  handleSignOut = () => {
-    this.wallet.signOut()
-    this.accountId = ''
-  };
+  getArtContract() {
+    return new Contract(
+      this.wallet.account(),
+      this.CONTRACT_ID,
+      {
+        viewMethods: ['getTempDesign', 'viewMyDesign'],
+        changeMethods: ['design', 'claimMyDesign', 'burnMyDesign']
+      }
+    )
+  }
 
   getTempDesign(accountId: any) {
-    return this.wallet.account().viewFunction(this.CONTRACT_ID, "getTempDesign", {accountId: accountId})
+    return this.artContract.getTempDesign(
+      { accountId: accountId }
+    );
   }
 
   getViewMyDesign(accountId: any) {
-    return this.wallet.account().viewFunction(this.CONTRACT_ID, "viewMyDesign", {accountId: accountId})
+    return this.artContract.viewMyDesign(
+      { accountId: accountId }
+    );
   }
 
   //function to generate new design
   generateDesign(accountId: any) {
-    return this.wallet.account().functionCall({
-      contractId: this.CONTRACT_ID,
-      methodName: "design",
-      gas: this.gas,
-      args: {accountId: accountId}
-    })
+    return this.artContract.design(
+      { accountId: accountId },
+      environment.GAS
+    );
   };
 
   //function to claim existing design
   claimDesign(seed: any) {
-    return this.wallet.account().functionCall({
-      contractId: this.CONTRACT_ID,
-      methodName: "claimMyDesign",
-      gas: this.gas,
-      args: {seed: seed}
-    })
+    return this.artContract.claimMyDesign(
+      { seed: seed },
+      environment.GAS
+    );
   };
 
   //function to burn design
   burnDesign() {
-    return this.wallet.account().functionCall({
-      contractId: this.CONTRACT_ID,
-      methodName: "burnMyDesign",
-      gas: this.gas,
-      args: {}
+    return this.artContract.burnMyDesign(
+      {},
+      environment.GAS
+    );
+  };
+
+  async handleSignIn() {
+    await this.wallet.requestSignIn({
+      contractId: environment.CONTRACT_ID,
+      methodNames: []
     })
+  };
+
+  handleSignOut() {
+    this.wallet.signOut()
+    this.accountId = ''
   };
 }
