@@ -55,7 +55,7 @@ export class NearService {
     );
   }
 
-  //function to generate new design
+  // generate new design
   generateDesign(accountId: any) {
     return this.artContract.design(
       { accountId: accountId },
@@ -63,7 +63,7 @@ export class NearService {
     );
   };
 
-  //function to claim existing design
+  // claim existing design
   claimDesign(seed: any) {
     return this.artContract.claimMyDesign(
       { seed: seed },
@@ -71,7 +71,7 @@ export class NearService {
     );
   };
 
-  //function to burn design
+  // burn design
   burnDesign() {
     return this.artContract.burnMyDesign(
       {},

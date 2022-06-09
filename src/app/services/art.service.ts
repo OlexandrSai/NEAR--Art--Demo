@@ -24,7 +24,6 @@ export class ArtService {
     this.isLoading = true
     await this.nearService.claimDesign(seed);
     this.myDesign = await this.nearService.getViewMyDesign(this.nearService.accountId)
-    console.log(this.myDesign)
     this.isLoading = false
   }
 
