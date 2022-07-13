@@ -21,7 +21,7 @@ function getContract() {
     CONTRACT_ID, // name of contract you're connecting to
     {
       viewMethods: ['getTempDesign', 'viewMyDesign'], // view methods do not change state but usually return a value
-      changeMethods: ['generateDesign', 'claimDesign', 'burnDesign'] // change methods modify state
+      changeMethods: ['design', 'claimMyDesign', 'burnMyDesign'] // change methods modify state
     }
   )
 }
@@ -48,11 +48,14 @@ export const getMyClaimedDesign = async (accountId) => {
 
 //function to generate new design
 export const generateDesign = async () => {
-  return await contract.design(gas)
+  await contract.design(
+    {},
+    gas
+  )
 }
 
 //function to claim generated design and save it as yours design
-export const claimDesign = async ({ seed }) => {
+export const claimDesign = async (seed) => {
   return await contract.claimMyDesign(
     { seed: seed },
     gas
@@ -61,5 +64,8 @@ export const claimDesign = async ({ seed }) => {
 
 //function to burn your claimed design
 export const burnDesign = async () => {
-  return contract.burnMyDesign(gas)
+  return await contract.burnMyDesign(
+    {},
+    gas
+  )
 }

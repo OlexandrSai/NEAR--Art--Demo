@@ -161,13 +161,13 @@
 </template>
 
 <script>
-
-import { wallet, CONTRACT_ID } from "@/services/near";
+import { useAuth } from "@/composables/useAuth"
 
 export default {
   setup() {
+    const { signIn } = useAuth();
     return {
-      signIn: () => wallet.requestSignIn(CONTRACT_ID)
+      signIn
     }
   }
 }
