@@ -6,7 +6,7 @@
                 <Card />
 
                 <!-- Footer -->
-                <Footer />
+                <HomeFooter />
             </div>
         </div>
     </section>
@@ -14,9 +14,9 @@
 
 <script>
 import Card from "../components/Card.vue";
-import Footer from "../components/Footer.vue";
+import HomeFooter from "../components/HomeFooter.vue";
 
 export default {
-    components: { Card, Footer }
+    components: { Card, HomeFooter }
 }
 </script>

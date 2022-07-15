@@ -6,38 +6,7 @@
             <div class="flex">
 
                 <!-- Left side dashboard -->
-                <div class="relative hidden lg:block dashboard-profile h-auto">
-
-                    <img src="@/assets/img/romb.png" alt="" class="absolute w-20 left-0 -top-6 ">
-                    <img src="@/assets/img/square.png" alt="" class="absolute w-24 -left-6 top-72">
-
-                    <div class="flex flex-col items-center">
-                        <a href="#" class="flex items-center text-4xl font-bold mt-12">
-                            <img src="@/assets/img/near_logo_stack1.png" alt="" class="">
-                            <span class="w-0.5 h-11 bg-black ml-1 mr-2"></span>
-                            Arts
-                            <span class="w-2 h-2 rounded-full bg-black ml-1 -mt-5"></span>
-                        </a>
-                        <div
-                            class="mt-12 w-20 h-20 rounded-full dashboard-profile-img flex justify-center items-center">
-                            <img src="@/assets/img/near_logo_stack2.png" alt="" class="">
-                        </div>
-                        <a
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-blue-400 text-xl font-bold mt-5">{{
-                                    accountId
-                            }}</a>
-                        <button @click.prevent="signOut" href="#"
-                            class="flex items-center mt-6 font-bold text-base hover:text-gray-500">
-                            <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M19 21H10C8.89543 21 8 20.1046 8 19V15H10V19H19V5H10V9H8V5C8 3.89543 8.89543 3 10 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 16V13H3V11H12V8L17 12L12 16Z"
-                                    fill="black" />
-                            </svg>
-                            Logout
-                        </button>
-                    </div>
-                </div>
+                <left-side-dashboard :accountId="accountId" :signOut="signOut"/>
 
                 <!-- Right side dashboard -->
                 <div class="lg:ml-10 w-full">
@@ -285,48 +254,7 @@
             </div>
 
             <!-- Footer -->
-            <footer class="mt-9 pb-12 md:mt-12 lg:mt-5 xl:mt-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-8">
-                    <div class="pl-2 md:pl-24 flex flex-col space-y-2">
-                        <a href="#" class="flex items-center text-4xl font-bold">
-                            <img src="@/assets/img/near_logo_stack1.png" alt="" class="">
-                            <span class="w-0.5 h-11 bg-black ml-1 mr-2"></span>
-                            Arts
-                            <span class="w-2 h-2 rounded-full bg-black ml-1 -mt-5"></span>
-                        </a>
-                        <a href="#" class="mt-2 font-semibold text-gray-500 hover:text-black ">
-                            info@nearartgenerator
-                        </a>
-                        <a href="#" class="font-semibold text-gray-500 hover:text-black">
-                            1-232-3434 (Main)
-                        </a>
-                    </div>
-                    <div class="pl-2 md:pl-24">
-                        <p class="text-xl font-bold">About</p>
-                        <ul class="text-gray-500 font-semibold space-y-1 mt-2">
-                            <li class=""><a href="" class="hover:text-black">About contract</a></li>
-                            <li class=""><a href="" class="hover:text-black">About NEAR </a></li>
-                            <li class=""><a href="" class="hover:text-black">About NEAR ecosystem</a></li>
-                        </ul>
-                    </div>
-                    <div class="pl-2 md:pl-24">
-                        <p class="text-xl font-bold">Community</p>
-                        <ul class="text-gray-500 font-semibold space-y-1 mt-2">
-                            <li class=""><a href="" class="hover:text-black">Community OS Wiki</a></li>
-                            <li class=""><a href="" class="hover:text-black">Forum</a></li>
-                            <li class=""><a href="" class="hover:text-black">Events</a></li>
-                        </ul>
-                    </div>
-                    <div class="pl-2 md:pl-24">
-                        <p class="text-xl font-bold">Help</p>
-                        <ul class="text-gray-500 font-semibold space-y-1 mt-2">
-                            <li class=""><a href="" class="hover:text-black">Support</a></li>
-                            <li class=""><a href="" class="hover:text-black">info@nearanalytics</a></li>
-                            <li class=""><a href="" class="hover:text-black">1-232-3434 (Main)</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
+            <dashboard-footer/>
         </div>
     </div>
     <loading v-model:active="isLoading" :can-cancel="false" :is-full-page="true" />
@@ -339,11 +267,15 @@ import { useArtDemo } from "@/composables/near"
 import { useAuth } from "@/composables/useAuth"
 import { onBeforeMount } from '@vue/runtime-core';
 import { useToast } from "vue-toastification";
+import DashboardFooter from '../components/DashboardFooter.vue';
+import LeftSideDashboard from '../components/LeftSideDashboard.vue';
 
 export default {
     components: {
-        Loading
-    },
+    Loading,
+    DashboardFooter,
+    LeftSideDashboard
+},
     setup() {
         const { accountId, signOut } = useAuth();
         const { generatedDesign, myDesign, getTempDesign, getMyClaimedDesign, generateDesign, claimDesign, burnDesign, isLoading } = useArtDemo();
