@@ -39,7 +39,7 @@ Also you can watch this video :
 After you successfully deployed smart contracts and you have contract id, you can input them on a deployed <a href="https://art-demo-react.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside .env file :
 
 ```
-VUE_APP_CONTRACT_ID = "put your thanks contract id here"
+VUE_APP_CONTRACT_ID = "put your contract id here"
 ...
 ```
 
