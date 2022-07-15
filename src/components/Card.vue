@@ -109,13 +109,9 @@
 </template>
 
 <script>
-import { useAuth } from "@/composables/useAuth"
 export default {
-    setup() {
-        const { signIn } = useAuth();
-        return {
-            signIn
-        };
+    props: {
+        signIn: Function
     }
 }
 </script>
