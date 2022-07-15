@@ -18,33 +18,28 @@ Right now I sent PR to NCD.L1.sample--art-demo with version of contract which wi
 
 Home page view
 
-![image](https://user-images.githubusercontent.com/38455192/169348821-a191c98b-c1ab-4580-811c-d91baaf21db4.png)
+![image](https://user-images.githubusercontent.com/38455192/179172719-df9e219c-60a4-47ba-ac21-07cf0fef5ca7.png)
 
-<a href="https://www.loom.com/share/da86b0536ee540a8b79d4e7c59f88b3a" target="_blank">UI walkthrough</a>
+Dashboard page view
+
+![image](https://user-images.githubusercontent.com/38455192/179176179-e659236e-202f-45ea-a2e0-f8faaad333ec.png)
+
+UI walkthrough
+<a href="https://www.loom.com/share/8d5e5809a08543b3a97bc0f6e06b3451" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179176766-5cf48183-a159-45fa-8d0d-17fa62e2d07b.png)
+</a>
 
 You can use this app with contract ids which were deployed by the creators of this repo or you can use it with your own deployed contract ids.
-If you are using not yours contract ids some functions of the thanks/registry contracts will not work because they are set to work only if owner called this  functions.
 
-<a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/blob/66dc6fb42a62317f8ff31c9c9ab96a995f3edd78/src/thanks/assembly/index.ts#L57" target="_blank">Example of such  function:</a>
-```
-  summarize(): Contract {
-    this.assert_owner()
-    return this
-  }
-
-```
-
-To deploy sample--thanks to your account visit <a href="https://github.com/Learn-NEAR/NCD.L1.sample--thanks/tree/registry" target="_blank">this repo (smart contract deployment instructions are inside):</a> 
+To deploy sample--art-demo to your account visit <a href="https://github.com/OlexandrSai/NCD.L1.sample--art-demo" target="_blank">this repo (smart contract deployment instructions are inside):</a> 
 
 Also you can watch this video : 
 
-<a href="https://www.loom.com/share/15692f40800a4686ad47af71e9368a3d" target="_blank">![image](https://user-images.githubusercontent.com/38455192/169353150-81bf6d02-1a9e-428b-88eb-23f3c2c14328.png)</a>
+<a href="https://www.loom.com/share/fe4ee8caf908418e88f22dce55145969" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179179390-b419927c-fbf2-4cf0-b727-7e8406e9a5fc.png)</a>
 
-After you successfully deployed registry and thanks contracts and you have contract ids, you can input them on a deployed <a href="sample-thanks.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside .env file :
+After you successfully deployed smart contracts and you have contract id, you can input them on a deployed <a href="https://art-demo-react.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside .env file :
 
 ```
-VUE_APP_THANKS_CONTRACT_ID = "put your thanks contract id here"
-VUE_APP_REGISTRY_CONTRACT_ID="put your registry contract id here"
+VUE_APP_CONTRACT_ID = "put your thanks contract id here"
 ...
 ```
 
