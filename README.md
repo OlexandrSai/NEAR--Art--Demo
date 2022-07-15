@@ -81,16 +81,16 @@ yarn lint
 ```
 
 ## 👀 Code walkthrough for Near university students
+Code walkthrough vide
+<a href="https://www.loom.com/share/39f25b9c20404e3aadb3ca465477ee31" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179183418-2411ca1b-e88b-4223-b18c-d004fe1f0cfd.png)</a>
 
-<a href="https://www.loom.com/share/0a7cc29f84fb4a33a691e0024ea125d7" target="_blank">Code walkthrough video</a>
-
-We are using ```near-api-js``` to work with NEAR blockchain. In ``` /services/near.js ``` we are importing classes, functions and configs which we are going to use:
+Project is using ```near-api-js``` to work with NEAR blockchain. In ``` /services/near.js ``` key classes, functions and configs are imported, they will be used to work with NEAR
 ```
 import { keyStores, Near, Contract, WalletConnection, utils } from "near-api-js";
 ```
-Then we are connecting to NEAR:
+Then connecting to NEAR:
 ```
-// connecting to NEAR, new NEAR is being used here to awoid async/await
+// connecting to NEAR
 export const near = new Near({
     networkId: process.env.VUE_APP_networkId,
     keyStore: new keyStores.BrowserLocalStorageKeyStore(),
@@ -101,70 +101,99 @@ export const near = new Near({
 ``` 
 and creating wallet connection
 ```
-export const wallet = new WalletConnection(near, "sample--Thanks--dapp");
+export const wallet = new WalletConnection(near, "NCD.L2.sample--art-demo");
 ```
-After this by using Composition API we need to create ```useWallet()``` function and use inside ```signIn()``` and ```signOut()``` functions of wallet object. By doing this, login functionality can now be used in any component. 
-
-And also we in return statement we are returning wallet object, we are doing this to call ``` wallet.getAccountId()``` to show accountId in ``` /components/Login.vue ```
-
-``` useWallet()``` code :
+After this by using Composition API you will need to create ```useAuth()``` function and use inside ```signIn()``` and ```signOut()``` functions of wallet object. By doing this, login functionality can then be used in any component of the app. Also because this app has more then 1 view, it is added ``` watchEffect() ``` to ``` useAuth() ```, it is redirecting pushing user to ``` /dashboard ``` if ``` accountId ``` is not null (basically, if user is logged in) :
 ```
-export const useWallet = () => {
+watchEffect(() => {
+        if (accountId.value) {
+            router.push('/dashboard')
+        }
 
-  const handleSignIn = () => {
-    // redirects user to wallet to authorize your dApp
-    // this creates an access key that will be stored in the browser's local storage
-    // access key can then be used to connect to NEAR and sign transactions via keyStore
-    wallet.requestSignIn({
-      contractId: THANKS_CONTRACT_ID,
-      methodNames: [] // add methods names to restrict access
+        if (!accountId.value) {
+            router.push('/')
+        }
     })
-  }
-
-  const handleSignOut = () => {
-    wallet.signOut()
-    accountId.value = wallet.getAccountId()
-  }
-
-  return {
-    wallet,
-    accountId,
-    err,
-    signIn: handleSignIn,
-    signOut: handleSignOut
-  };
-};
 ```
 
-To work with smart thanks and registry smart contracts we will create separate ```useContracts()``` function with Composition API to split the logic. We are loading the contracts inside  ``` /services/near.js:```
-```
-const thanksContract = getThanksContract()
-const registryContract = getRegistryContract()
+And also return statement is returning wallet object, this is done to call ``` wallet.getAccountId()``` to show accountId in ``` /components/Card.vue ```
 
-function getThanksContract() {
-    return new Contract(
-        wallet.account(), // the account object that is connecting
-        THANKS_CONTRACT_ID, // name of contract you're connecting to
-        {
-            viewMethods: ['get_owner'], // view methods do not change state but usually return a value
-            changeMethods: ['say', 'list', 'summarize', 'transfer'] // change methods modify state
+``` useAuth()``` code :
+```
+import { watchEffect,ref } from "vue";
+import { useRouter } from 'vue-router';
+import { wallet, CONTRACT_ID, } from "@/services/near";
+
+const accountId = ref(wallet.getAccountId())
+
+export const useAuth = () => {
+    const router = useRouter()
+
+    const handleSignIn = () => {
+        // redirects user to wallet to authorize your dApp
+        // this creates an access key that will be stored in the browser's local storage
+        // access key can then be used to connect to NEAR and sign transactions via keyStore
+        wallet.requestSignIn({
+            contractId: CONTRACT_ID,
+            methodNames: [] // add methods names to restrict access
+        })
+    }
+
+    const handleSignOut = () => {
+        wallet.signOut()
+        accountId.value = wallet.getAccountId()
+    }
+
+    watchEffect(() => {
+        if (accountId.value) {
+            router.push('/dashboard')
         }
-    )
+
+        if (!accountId.value) {
+            router.push('/')
+        }
+    })
+
+    return {
+        wallet,
+        accountId,
+        signIn: handleSignIn,
+        signOut: handleSignOut
+    };
+}
+```
+
+To work with sample--art-demo contract separate ```useArtDemo()``` function is created with Composition API to split the logic. Contract is loaded inside  ``` /services/near.js:```
+```
+export const CONTRACT_ID = process.env.VUE_APP_CONTRACT_ID;
+const gas = new BN(process.env.VUE_APP_gas);
+
+// connecting to NEAR
+export const near = new Near({
+  networkId: process.env.VUE_APP_networkId,
+  keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+  nodeUrl: process.env.VUE_APP_nodeUrl,
+  walletUrl: process.env.VUE_APP_walletUrl,
+});
+
+//create wallet connection
+export const wallet = new WalletConnection(near, "NCD.L2.sample--art-demo");
+
+function getContract() {
+  return new Contract(
+    wallet.account(), // the account object that is connecting
+    CONTRACT_ID, // name of contract you're connecting to
+    {
+      viewMethods: ['getTempDesign', 'viewMyDesign'], // view methods do not change state but usually return a value
+      changeMethods: ['design', 'claimMyDesign', 'burnMyDesign'] // change methods modify state
+    }
+  )
 }
 
-function getRegistryContract() {
-    return new Contract(
-        wallet.account(), // the account object that is connecting
-        REGISTRY_CONTRACT_ID, // name of contract you're connecting to
-        {
-            viewMethods: ["list_all", "is_registered"], // view methods do not change state but usually return a value
-            changeMethods: ['register'] // change methods modify state
-        }
-    )
-}
+const contract = getContract()
 ```
 
-and we are creating function to export for each contract function
+and export function is created for each contract method
 
 example of a call with no params: 
 ```
@@ -174,164 +203,168 @@ export const getMessages = async () => {
 }
 ```
 
-example of call with params 
+example of call with params (VIEW Method)
 ```
-//function to send a message anon or not anon
-export const sendMessage = async ({ message, anonymous, attachedDeposit }) => {
-    attachedDeposit = (utils.format.parseNearAmount(attachedDeposit.toString())) // converts yoctoNEAR (10^-24) amount into NEAR
-    return await thanksContract.say(
-        { anonymous: anonymous, message: message },
-        gas,
-        attachedDeposit
-    )
+//function to get user claimed design
+export const getMyClaimedDesign = async (accountId) => {
+  return await contract.viewMyDesign({ accountId: accountId })
 }
 
 ```
 
-Then in ```composables/near.js``` we are just importing all logic from ```services/near.js```: 
+example of call with params (CHANGE Method)
 ```
- import {
-  wallet,
-  THANKS_CONTRACT_ID,
-  getRecipients,
-  getOwner,
-  isRegistered,
-  sendMessage,
-  getMessages,
-  getSummarizedInfo,
-  transferFundsToOwner
-} from "../services/near";
+//function to claim generated design and save it as yours design
+export const claimDesign = async (seed) => {
+  return await contract.claimMyDesign(
+    { seed: seed },
+    gas
+  )
+}
+
 ```
 
-and using it to store some state of contracts and to call contracts functions: 
+Then in ```composables/near.js``` all logic from ```services/near.js``` is imported: 
 ```
-const owner = ref(null)
-const recipients = ref(null)
+import {
+    wallet,
+    getTempDesign,
+    getMyClaimedDesign,
+    generateDesign,
+    claimDesign,
+    burnDesign,
+} from "@/services/near";
+```
+
+and it is used to store some state of contract and to call contracts methods from services layer: 
+```
+const generatedDesign = ref(null)
+const myDesign = ref(null)
 const isLoading = ref(false)
-const isTransferingToOwner = ref(null)
-const messages = ref(null)
-const summarizedInfo = ref(null)
 const err = ref(null)
 
-export const useContracts = () => {
+export const useArtDemo = () => {
 
-  const handleGetRecipients = () => {
-    return getRecipients()
-  }
+    const handleGetTempDesign = async (accountId) => {
+        return await getTempDesign(accountId)
+    }
 
-  const handleGetSummarizedInfo = () => {
-    return getSummarizedInfo()
-  }
+    const handleGetMyClaimedDesign = async (accountId) => {
+        return await getMyClaimedDesign(accountId)
+    }
 
-  const handleGetOwner = () => {
-    return getOwner()
-  }
+    const handleGenerateDesign = async (accountId) => {
+        await generateDesign()
+        generatedDesign.value = await getTempDesign(accountId)
+    }
 
-  const fetchMessages = () => {
-    return getMessages()
-  }
+    const handleClaimDesign = async (seed) => {
+        await claimDesign(seed).then(res => console.log(res), res => console.log(res))
+        myDesign.value = await getMyClaimedDesign(wallet.getAccountId())
+    }
 
-  const handleSendMessage = ({ message, anonymous, attachedDeposit }) => {
-    return sendMessage({ message, anonymous, attachedDeposit });
-  };
+    const handleBurnDesign = async () => {
+        await burnDesign()
+        myDesign.value = null
+    }
 
-  const handleTransfer = () => {
-    return transferFundsToOwner();
-  }
-
-  return {
-    isLoading,
-    isTransferingToOwner,
-    isRegistered,
-    owner,
-    err,
-    getOwner: handleGetOwner,
-    recipients,
-    getRecipients: handleGetRecipients,
-    messages,
-    getMessages: fetchMessages,
-    summarizedInfo,
-    getSummarizedInfo: handleGetSummarizedInfo,
-    sendMessage: handleSendMessage,
-    transferFunds: handleTransfer
-  };
-};
-```
-
-Inside ```/views/Home.vue``` we have lifecycle hook ``` onBeforeMount() ``` where we are getting all the data from the smart contract with ``` useWallet()``` and ``` useContracts()``` functions
-```
-setup() {
-      const { accountId } = useWallet()
-      const { getOwner, owner, messages, getMessages, recipients, getRecipients, summarizedInfo, getSummarizedInfo} = useContracts()
-
-      onBeforeMount(async () => {
-          accountId.value = await wallet.getAccountId()
-          owner.value = await getOwner()
-          recipients.value = await getRecipients()
-          messages.value = mockDonatesHistory
-          if (owner.value == accountId.value) {
-              messages.value = await getMessages()
-              summarizedInfo.value = await getSummarizedInfo()
-            } 
-      })
-
-      watch(accountId, async ()=>{
-        if (owner.value == accountId.value) {
-            messages.value = await getMessages()
-            return
-        }
-        messages.value = mockDonatesHistory
-      }, {deep:true})
-      
-      return {
-          accountId,
-          getOwner,
-          owner,
-          messages,
-          getMessages,
-          recipients,
-          getRecipients,
-          summarizedInfo,
-          getSummarizedInfo
-      }
-  }
+    return {
+        isLoading,
+        generatedDesign,
+        myDesign,
+        err,
+        getTempDesign:handleGetTempDesign,
+        getMyClaimedDesign: handleGetMyClaimedDesign,
+        generateDesign: handleGenerateDesign,
+        claimDesign: handleClaimDesign,
+        burnDesign: handleBurnDesign
+    }
 }
 ```
 
-And inside components we are using the same ``` useWallet()``` and ``` useContracts()``` functions to manage state of dapp. ``` /components/Summarize.vue ``` as an example :
+Inside ``` views/Home.vue ``` only ``` signIn() ``` function is imported and passed as props to child component. No additional logic of smart contract is used on Home page:
 ```
+export default {
+    components: { Card, HomeFooter },
     setup() {
-        const { transferFunds, summarizedInfo, getSummarizedInfo } = useContracts()
-        const isTransferingToOwner = ref(false)
-        const onTransfer = ref(false)
+        const { signIn } = useAuth();
+        return {
+            signIn
+        };
+    }
+}
+...
+//passing as a prop to child component
+<Card :signIn="signIn"/>
+```
+
+Inside ```/views/Dashboard.vue``` lifecycle hook ``` onBeforeMount() ``` is used, inside hook all the data is received from the smart contract with ``` useArtDemo()```  function
+```
+setup() {
+      setup() {
+        const { accountId, signOut } = useAuth();
+        const { generatedDesign, myDesign, getTempDesign, getMyClaimedDesign, generateDesign, claimDesign, burnDesign, isLoading } = useArtDemo();
         const toast = useToast()
 
-        async function handleTransfer() {
+        onBeforeMount(async () => {
+            isLoading.value = true
+            generatedDesign.value = await getTempDesign(accountId.value)
+            if (generatedDesign.value === null) {
+                await generateDesign(accountId.value)
+            }
+            myDesign.value = await getMyClaimedDesign(accountId.value)
+            isLoading.value = false
+        })
+
+        async function handleGenerateDesign() {
             try {
-                isTransferingToOwner.value = true
-                await transferFunds()
-                toast.success(`Transfer success`)
-                onTransfer.value = true
+                isLoading.value = true
+                await generateDesign(accountId.value)
+            } catch (error) {
+                toast.error("Error while generating new design")
+            }
+            isLoading.value = false
+        }
+
+        async function handleClaimDesign() {
+            if (myDesign.value) {
+                toast.error("You can have only 1 design claimed. First burn you already claimed design, to be able to claim new one")
+            } else {
+                try {
+                    isLoading.value = true
+                    await claimDesign(generatedDesign.value.seed)
+                } catch (error) {
+                    const errorMessage = error?.kind?.ExecutionError
+                    toast.error(errorMessage.slice(0, errorMessage.match(', filename').index))
+                }
+            }
+            isLoading.value = false
+        }
+
+        async function handleBurnDesign() {
+            try {
+                isLoading.value = true
+                await burnDesign()
             } catch (error) {
                 const errorMessage = error?.kind?.ExecutionError
                 toast.error(errorMessage.slice(0, errorMessage.match(', filename').index))
             }
-            isTransferingToOwner.value = false
+            isLoading.value = false
         }
-
-        watch(onTransfer, async () => {
-            if (onTransfer.value) {
-                summarizedInfo.value = await getSummarizedInfo()
-                onTransfer.value = false
-            }
-        }, { deep: true })
 
         return {
-            isTransferingToOwner,
-            handleTransfer,
-            summarizedInfo,
-            getSummarizedInfo,
-            utils
+            accountId,
+            signOut,
+            handleGenerateDesign,
+            myDesign,
+            generatedDesign,
+            handleClaimDesign,
+            handleBurnDesign,
+            isLoading
         }
-    }
+```
+
+Then it is passing all values and functions which are used inside each child component as a props :
+```
+    <left-side-dashboard :accountId="accountId" :signOut="signOut" />
 ```
