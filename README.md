@@ -34,8 +34,7 @@ To deploy sample--art-demo to your account visit <a href="https://github.com/Ole
 
 Also you can watch this video : 
 
-<a href="https://www.loom.com/share/979138a7063f44ddb4eaac840f444794" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179177981-333f9199-4e00-4c55-aefb-f47e4da9403c.png)
-</a>
+<a href="https://www.loom.com/share/fe4ee8caf908418e88f22dce55145969" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179179390-b419927c-fbf2-4cf0-b727-7e8406e9a5fc.png)</a>
 
 After you successfully deployed smart contracts and you have contract id, you can input them on a deployed <a href="https://art-demo-react.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside .env file :
 
