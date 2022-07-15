@@ -1,30 +1,37 @@
-#  🎓 NCD.L2.sample--art-demo dApp
-This repository contains a complete frontend applications (Vue.js, React, Angular) to work with
-<a href="https://github.com/Learn-NEAR/NCD.L1.sample--art-demo" target="_blank">NCD.L1.sample--art-demo contract</a>, implementation of it is also stored in
-<a href="https://github.com/Learn-NEAR/NCD.L2.sample--art-demo/tree/main/contract/NCD.L1.sample--art-demo" target="_blank">current repository</a> targeting the NEAR platform:
-1. Vue.Js (main branch)
-2. React (react branch)
-2. Angular (angular branch)
+#  🎓 NCD.L2.sample--art-demo dapp
+This branch contains a complete frontend Angular application to work with 
+<a href="https://github.com/Learn-NEAR/NCD.L1.sample--art-demo" target="_blank">NCD.L1.sample--art-demo smart contract</a> targeting the NEAR platform
 
-The goal of this repository is to make it as easy as possible to get started writing frontend with Vue.js, React, and Angular for AssemblyScript contracts built to work with NEAR Protocol.
-
+The goal of this repository is to make it as easy as possible to get started writing frontend with React for AssemblyScript contracts built to work with NEAR Protocol.
 
 ## ⚠️ Warning
-Any content produced by NEAR, or developer resources that NEAR provides, are for educational and inspirational purposes only. NEAR does not encourage, induce or sanction the deployment of any such applications in violation of applicable laws or regulations.
+Any content produced by NEAR, or developer resources that NEAR provides, are for educational and inspiration purposes only. NEAR does not encourage, induce or sanction the deployment of any such applications in violation of applicable laws or regulations.
 
+![image](https://user-images.githubusercontent.com/48129985/173148121-89507d33-04a3-4f61-9fbe-725f13d1eadb.png)
 
 ## ⚡  Usage
-![image](https://user-images.githubusercontent.com/15414351/172921293-5f5e9845-3085-435e-8faf-5699ac82bf4a.png)
-<a href="" target="_blank">UI walkthrough | TBA </a>
+Home page view
 
-You can use this app with contract ids that were deployed by the creators of this repo or you can use it with your own deployed contract ids.
+![image](https://user-images.githubusercontent.com/38455192/179172719-df9e219c-60a4-47ba-ac21-07cf0fef5ca7.png)
 
-Before pasting id make sure that you deployed the correct smart contract, in other cases this code may not work as expected.
+Dashboard page view
 
-## Project setup
-To deploy sample--art-demo to your account visit <a href="https://github.com/Learn-NEAR/NCD.L1.sample--art-demo" target="_blank">this repo (smart contract deployment instructions are inside):</a>
+![image](https://user-images.githubusercontent.com/38455192/179176179-e659236e-202f-45ea-a2e0-f8faaad333ec.png)
 
-After you successfully deployed art-demo contract, and you get the contract id, put it inside ``` src/environments/environment.ts ``` file :
+UI walkthrough
+<a href="https://www.loom.com/share/8d5e5809a08543b3a97bc0f6e06b3451" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179176766-5cf48183-a159-45fa-8d0d-17fa62e2d07b.png)
+</a>
+
+
+You can use this app with contract ids which were deployed by the creators of this repo or you can use it with your own deployed contract ids.
+
+To deploy sample--art-demo to your account visit <a href="https://github.com/OlexandrSai/NCD.L1.sample--art-demo" target="_blank">this repo (smart contract deployment instructions are inside):</a> 
+
+Also you can watch this video : 
+
+<a href="https://www.loom.com/share/fe4ee8caf908418e88f22dce55145969" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179179390-b419927c-fbf2-4cf0-b727-7e8406e9a5fc.png)</a>
+
+After you successfully deployed smart contracts and you have contract id, you can input them on a deployed <a href="https://art-demo-react.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside ``` src/environments/environment.ts ``` file :
 
 ```
 CONTRACT_ID = "put your art-demo contract id here"
