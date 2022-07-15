@@ -1,12 +1,8 @@
-#  🎓 NCD.L2.sample--thanks dapp
-This repository contains a complete frontend applications (React) to work with 
-<a href="https://github.com/Learn-NEAR/NCD.L1.sample--art-demo" target="_blank">NCD.L1.sample--art-demo smart contract</a> targeting the NEAR platform:
-1. React (master branch)
+#  🎓 NCD.L2.sample--art-demo dapp
+This branch contains a complete frontend React application to work with 
+<a href="https://github.com/Learn-NEAR/NCD.L1.sample--art-demo" target="_blank">NCD.L1.sample--art-demo smart contract</a> targeting the NEAR platform
 
 The goal of this repository is to make it as easy as possible to get started writing frontend with React for AssemblyScript contracts built to work with NEAR Protocol.
-
-## DEMO:
-<a href="https://art-demo-react.onrender.com" target="_blank">Open demo</a>
 
 ## ⚠️ Warning
 Any content produced by NEAR, or developer resources that NEAR provides, are for educational and inspiration purposes only. NEAR does not encourage, induce or sanction the deployment of any such applications in violation of applicable laws or regulations.
@@ -14,14 +10,28 @@ Any content produced by NEAR, or developer resources that NEAR provides, are for
 ![image](https://user-images.githubusercontent.com/48129985/173148121-89507d33-04a3-4f61-9fbe-725f13d1eadb.png)
 
 ## ⚡  Usage
-I recorded a short video in Loom, where I review "what is do" this project
-<a href="https://www.loom.com/share/8d4ca6ec67ec4d16bee3dcd04933c797" target="_blank">UI walkthrough</a>
+Home page view
+
+![image](https://user-images.githubusercontent.com/38455192/179172719-df9e219c-60a4-47ba-ac21-07cf0fef5ca7.png)
+
+Dashboard page view
+
+![image](https://user-images.githubusercontent.com/38455192/179176179-e659236e-202f-45ea-a2e0-f8faaad333ec.png)
+
+UI walkthrough
+<a href="https://www.loom.com/share/8d5e5809a08543b3a97bc0f6e06b3451" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179176766-5cf48183-a159-45fa-8d0d-17fa62e2d07b.png)
+</a>
 
 
-To deploy art--demo to your account visit <a href="https://github.com/Learn-NEAR/NCD.L1.sample--art-demo" target="_blank">this repo (smart contract deployment instructions are inside):</a> 
+You can use this app with contract ids which were deployed by the creators of this repo or you can use it with your own deployed contract ids.
 
+To deploy sample--art-demo to your account visit <a href="https://github.com/OlexandrSai/NCD.L1.sample--art-demo" target="_blank">this repo (smart contract deployment instructions are inside):</a> 
 
-After you successfully deployed registry and thanks contracts and you have contract ids, you can input them on a deployed <a href="art-demo-react.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside .env file :
+Also you can watch this video : 
+
+<a href="https://www.loom.com/share/fe4ee8caf908418e88f22dce55145969" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179179390-b419927c-fbf2-4cf0-b727-7e8406e9a5fc.png)</a>
+
+After you successfully deployed smart contracts and you have contract id, you can input them on a deployed <a href="https://art-demo-react.onrender.com/" target="_blank">website </a> or you can clone the repo and put contract ids inside .env file :
 
 ```
 REACT_APP_CONTRACT_ID = "put your smart-contract id here"
@@ -50,8 +60,9 @@ yarn lint
 
 ## 👀 Code walkthrough for Near university students
 
-I recorded a short video in Loom, where I review the code
-<a href="https://www.loom.com/share/f983645da1b7405a883124c3025577c2" target="_blank">Code walkthrough video</a>
+Code walkthrough video
+<a href="https://www.loom.com/share/24f8aad9c9ff4d35aca7ab38c5c9f9e8" target="_blank">![image](https://user-images.githubusercontent.com/38455192/179191984-489f6cdf-a34d-4d24-b357-0fa57a57a2f9.png)
+</a>
 
 We are using ```near-api-js``` to work with NEAR blockchain. In ``` /services/near.js ``` we are importing classes, functions and configs which we are going to use:
 ```
@@ -87,7 +98,7 @@ export const signOut = () => {
 };
 ```
 
-To work with smart thanks and registry smart contracts we are loading the contracts inside  ``` /services/near.js:```
+To work with smart contract we are loading the contract inside  ``` /services/near.js:```
 ```
 export const contract = () =>
   new Contract(wallet().account(), getContractID(), {
