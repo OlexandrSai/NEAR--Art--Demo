@@ -1,71 +1,57 @@
-import { keyStores, Near, Contract, WalletConnection } from "near-api-js";
-import BN from "bn.js";
+import BN from 'bn.js';
+import { keyStores, Near, WalletConnection, Contract } from 'near-api-js';
 
-export const CONTRACT_ID = process.env.VUE_APP_CONTRACT_ID;
-const gas = new BN(process.env.VUE_APP_gas);
+const getContractID = () => localStorage.getItem('CONTRACT_ID');
+const gas = new BN('100000000000000');
 
-// connecting to NEAR, new NEAR is being used here to awoid async/await
-export const near = new Near({
-  networkId: process.env.VUE_APP_networkId,
+// use new NEAR to avoid async/await
+export const config = new Near({
+  networkId: 'testnet',
   keyStore: new keyStores.BrowserLocalStorageKeyStore(),
-  nodeUrl: process.env.VUE_APP_nodeUrl,
-  walletUrl: process.env.VUE_APP_walletUrl,
+  nodeUrl: 'https://rpc.testnet.near.org',
+  walletUrl: 'https://wallet.testnet.near.org',
 });
 
-//create wallet connection
-export const wallet = new WalletConnection(near, "NCD.L2.sample--art-demo");
+export const wallet = () => new WalletConnection(config, getContractID());
 
-function getContract() {
-  return new Contract(
-    wallet.account(), // the account object that is connecting
-    CONTRACT_ID, // name of contract you're connecting to
-    {
-      viewMethods: ['getTempDesign', 'viewMyDesign'], // view methods do not change state but usually return a value
-      changeMethods: ['design', 'claimMyDesign', 'burnMyDesign'] // change methods modify state
-    }
-  )
-}
+export const signIn = (successUrl) => {
+  return wallet().requestSignIn({ contractId: getContractID(), successUrl });
+};
 
-const contract = getContract()
+export const signOut = () => {
+  return wallet().signOut(getContractID());
+};
 
-// --------------------------------------------------------------------------
-// functions to call sample--art--demo contract VIEW methods
-// --------------------------------------------------------------------------
+export const getTempDesign = (accountId) => {
+  return wallet().account().viewFunction(getContractID(), 'getTempDesign', { accountId });
+};
 
-//function to get user last generated design
-export const getTempDesign = async (accountId) => {
-  return await contract.getTempDesign({ accountId: accountId })
-}
+export const getViewMyDesign = (accountId) => {
+  return wallet().account().viewFunction(getContractID(), 'viewMyDesign', { accountId });
+};
 
-//function to get user claimed design
-export const getMyClaimedDesign = async (accountId) => {
-  return await contract.viewMyDesign({ accountId: accountId })
-}
-
-// --------------------------------------------------------------------------
-// functions to call sample--art--demo contract CHANGE methods
-// --------------------------------------------------------------------------
+export const contract = () =>
+  new Contract(wallet().account(), getContractID(), {
+    viewMethods: [''],
+    changeMethods: ['design', 'claimMyDesign', 'burnMyDesign'],
+    sender: wallet().account(),
+  });
 
 //function to generate new design
-export const generateDesign = async () => {
-  await contract.design(
-    {},
-    gas
-  )
-}
+export const generateDesign = (accountId) => {
+  return contract().design({
+    gas,
+    args: { accountId },
+  });
+};
 
-//function to claim generated design and save it as yours design
-export const claimDesign = async (seed) => {
-  return await contract.claimMyDesign(
-    { seed: seed },
-    gas
-  )
-}
+//function to claim existing design
+export const claimDesign = (seed) => {
+  return contract().claimMyDesign({
+    gas,
+    args: { seed },
+  });
+};
 
-//function to burn your claimed design
-export const burnDesign = async () => {
-  return await contract.burnMyDesign(
-    {},
-    gas
-  )
-}
+//function to burn design
+export const burnDesign = () => contract().burnMyDesign();
